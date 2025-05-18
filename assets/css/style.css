@@ -1,0 +1,340 @@
+* {
+    font-family: "Poppins";
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --dark-gray: #3D3D3D;
+    --white: #FFFFFF;
+    --padding50: 50px;
+    --red: #C52424;
+    --gray_border: #D1D1D1;
+    --sand_dark: #80775C;
+}
+
+main {
+    padding: 0 50px;
+}
+
+.button {
+    text-decoration: none;
+    color: var(--white);
+    background-color: var(--dark-gray);
+    padding: .5rem 1.5rem;
+    font-size: 14px;
+    border-radius: .5rem;
+}
+
+.table_btn {
+    width: 102px;
+    height: 37px;
+    border: 1px solid var(--sand_dark);
+    text-decoration: none;
+    color: var(--sand_dark);
+    padding: .5rem;
+    border-radius: 1rem;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.table_btn:hover {
+    background-color: var(--sand_dark);
+    color: var(--white);
+}
+
+/* header */
+header {
+    background-color: var(--dark-gray);
+    height: 83px;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    color: var(--white);
+    justify-content: space-between;
+}
+
+/* header logo */
+.header_logo {
+    height: 83px;
+    display: flex;
+    flex-direction: row;
+    padding-left: var(--padding50);
+    justify-content: center;
+    padding-top: 9px;
+}
+
+.header_logo img {
+    width: 37px;
+    height: 37px;
+}
+
+.header_logo_text {
+    justify-content: center;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.header_logo_text h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.header_logo_text h3 {
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.header_logo_text h3 span {
+    font-size: 10px;
+    color: #838383;
+}
+
+.header_logo a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+.header_menu a {
+    transition: color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.header_menu a:hover {
+    text-decoration: none;
+    color: var(--sand_dark);
+}
+
+/* header menu */
+.header_menu {
+    height: 83px;
+    display: flex;
+    padding-right: var(--padding50);
+    text-align: center;
+    align-items: center;
+}
+
+.header_menu ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.header_menu ul li {
+    list-style: none;
+    padding: 0 25px;
+}
+
+.header_menu ul li a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+/* section infos */
+#infos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2.5rem 0;
+}
+
+.infos_hello h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.infos_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* infos - cards */
+#numbs {
+    padding-top: 5rem;
+}
+
+.info_cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card {
+    width: 318px;
+    height: 175px;
+    border: 1px solid var(--gray_border);
+    border-radius: .5rem;
+}
+
+.card_content {
+    padding: 2rem 1rem;
+}
+
+.card_title h2 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.card_cont h3 {
+    font-size: 60px;
+}
+
+#card_red h3 {
+    color: var(--red);
+}
+
+.card:hover {
+    box-shadow: -2px 3px 20px 3px rgba(0, 0, 0, 0.11);
+    -webkit-box-shadow: -2px 3px 20px 3px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: -2px 3px 20px 3px rgba(0, 0, 0, 0.11);
+    transition: all 0.5s ease-in-out;
+}
+
+/* info table */
+
+.infos_table h2 {
+    font-size: 32px;
+    font-weight: bold;
+    padding: 2.5rem 0;
+}
+
+.infos_table_btn {
+    padding-bottom: 1.5rem;
+}
+
+/* table */
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-left: 1px solid var(--gray_border);
+    border-right: 1px solid var(--gray_border);
+    border-bottom: 1px solid var(--gray_border);
+}
+
+.table_head th:first-child {
+    border-top-left-radius: .5rem;
+}
+
+.table_head th:last-child {
+    border-top-right-radius: .5rem;
+}
+
+.table_head {
+    background-color: var(--sand_dark);
+    color: var(--white);
+    justify-content: space-between;
+    height: 4rem;
+}
+
+
+.table_body {
+    justify-content: space-between;
+    text-align: center;
+}
+
+.table_body tr td {
+    height: 1rem;
+    width: auto;
+    padding: .5rem 0;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid var(--gray_border);
+}
+
+.table_body select {
+    width: 80%;
+    height: 50px;
+    text-align: center;
+}
+
+.table_container {
+    overflow: hidden;
+    padding-bottom: 5rem;
+}
+
+/* footer */
+
+footer {
+    background-color: var(--sand_dark);
+}
+
+.footer_content {
+    display: flex;
+    height: 3rem;
+    color: var(--white);
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 1rem;
+}
+
+.footer_content a {
+    text-decoration: none;
+    color: var(--white);
+    font-weight: bold;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------- */
+/* page apos acionar botão adicionar venda */
+#add_sale {
+    padding: 2rem 0;
+    background-color: var(--gray_border);
+    border: 2px solid var(--dark-gray);
+}
+
+.add_sale_content h2 {
+    font-size: 2rem;
+    padding-left: 3rem;
+    text-align: center;
+    color: var(--dark-gray);
+}
+
+.add_sale_inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inputs_top,
+.inputs_bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1rem 0;
+}
+
+.option_sale input {
+    background-color: var(--gray_border);
+    border:  1px solid var(--dark-gray);
+}
+
+.option_sale input::placeholder {
+    color: #000;
+    font-size: 14px;
+    text-align: center;
+}
+
+.option_sale input[type="text"] {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+.option_sale select {
+    background-color: var(--gray_border);
+    border: 1px solid var(--dark-gray);
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+.add_sale_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------- */
+/* Finalizadas Page */
