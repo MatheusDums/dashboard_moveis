@@ -4,20 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <title>Finalizadas - Rústicos & Cia.</title>
 </head>
 
-<body>
+<body class="pagina_finalizadas">
     <header>
         <nav>
             <div class="header_logo">
-                <a href="../index.html"><img src="../media/image/engr.png" alt=""></a>
+                <a href="../../index.html"><img src="../media/image/engr.png" alt=""></a>
                 <div class="header_logo_text">
-                    <a href="../index.html">
+                    <a href="../../index.html">
                         <h2>Rústicos & Cia</h2>
                     </a>
-                    <a href="../index.html">
+                    <a href="../../index.html">
                         <h3>Dashboard <span>v.01</span></h3>
                     </a>
                 </div>
@@ -25,7 +28,7 @@
 
             <div class="header_menu">
                 <ul>
-                    <li><a href="../index.html">Dashboard</a></li>
+                    <li><a href="../../index.html">Dashboard</a></li>
                     <li><a href="#">Finalizadas</a></li>
                     <li><a href="../pages/ultimo_mes.html">30 dias</a></li>
                 </ul>
@@ -33,7 +36,138 @@
     </header>
 
     <main>
-        <h1>FINALIZADAS</h1>
+        <section id="infos">
+            <div class="infos_hello">
+                <h1>Olá Matheus 👋🏼,</h1>
+            </div>
+
+            <div class="infos_btn">
+                <a href="#" class="button">Adicionar Venda</a>
+            </div>
+        </section>
+
+        <section id="numbs">
+            <section class="info_cards">
+                <div class="card">
+                    <div class="card_content">
+                        <div class="card_title">
+                            <h2>Total de Pedidos Ativos</h2>
+                        </div>
+                        <div class="card_cont">
+                            <h3>0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="card_red">
+                    <div class="card_content">
+                        <div class="card_title">
+                            <h2>Valor Total de Vendas</h2>
+                        </div>
+                        <div class="card_cont">
+                            <h3>R$ <span>0</span></h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card">
+                    <div class="card_content">
+                        <div class="card_title">
+                            <h2>Lucro Total</h2>
+                        </div>
+                        <div class="card_cont">
+                            <h3>R$ <span>0</span></h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card">
+                    <div class="card_content">
+                        <div class="card_title">
+                            <h2>Pedidos em Preparação</h2>
+                        </div>
+                        <div class="card_cont">
+                            <h3>0</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </section>
+
+        <section id="info_table">
+            <div class="infos_table">
+                <h2>Últimos Pedidos</h2>
+            </div>
+
+            <div class="infos_table_btn">
+                <a href="#" class="table_btn">Todos</a>
+                <a href="#" class="table_btn">Finalizadas</a>
+            </div>
+        </section>
+
+        <div class="table_container">
+            <div class="table_content">
+                <table class="table">
+                    <thead class="table_head">
+                        <tr>
+                            <th>Nº do pedido</th>
+                            <th>Quantidade</th>
+                            <th>Item</th>
+                            <th>Cliente</th>
+                            <th>Data</th>
+                            <th>Valor Total</th>
+                            <th>Lucro</th>
+                            <th>Situação atual</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table_body">
+                        <tr>
+                            <td>#000</td>
+                            <td>0</td>
+                            <td>Teste</td>
+                            <td>Matheus</td>
+                            <td>18/05/2025</td>
+                            <td>R$ <span>0</span></td>
+                            <td>R$ <span>0</span></td>
+                            <td>
+                                <select name="" id="">
+                                    <option value="confirmado">Pedido Confirmado</option>
+                                    <option value="preparando">Em Preparação</option>
+                                    <option value="entrega">Aguardando Entrega</option>
+                                    <option value="finalizada">Entregue</option>
+                                    <option value="deletar">Deletar</option>
+                                </select>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>#001</td>
+                            <td>0</td>
+                            <td>Cristaleira 2pt Azul</td>
+                            <td>Dums</td>
+                            <td>18/05/2025</td>
+                            <td>R$ <span>0</span></td>
+                            <td>R$ <span>0</span></td>
+                            <td>
+                                <select name="" id="">
+                                    <option value="confirmado">Pedido Confirmado</option>
+                                    <option value="preparando">Em Preparação</option>
+                                    <option value="entrega">Aguardando Entrega</option>
+                                    <option value="finalizada">Entregue</option>
+                                    <option value="deletar">Deletar</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
 
     <footer>

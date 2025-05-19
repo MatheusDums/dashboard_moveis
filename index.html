@@ -9,7 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Dashboard - Rústicos & Cia.</title>
 </head>
 
@@ -17,7 +17,7 @@
     <header>
         <nav>
             <div class="header_logo">
-                <a href="#"><img src="./media/image/engr.png" alt=""></a>
+                <a href="#"><img src="./assets/media/image/engr.png" alt=""></a>
                 <div class="header_logo_text">
                     <a href="#">
                         <h2>Rústicos & Cia</h2>
@@ -31,8 +31,8 @@
             <div class="header_menu">
                 <ul>
                     <li><a href="#">Dashboard</a></li>
-                    <li><a href="./pages/finalizadas.html">Finalizadas</a></li>
-                    <li><a href="./pages/ultimo_mes.html">30 dias</a></li>
+                    <li><a href="./assets/pages/finalizadas.html">Finalizadas</a></li>
+                    <li><a href="./assets/pages/ultimo_mes.html">30 dias</a></li>
                 </ul>
         </nav>
     </header>
@@ -78,6 +78,11 @@
 
                 <div class="inputs_bottom">
                     <div class="option_sale">
+                        <label for="data_venda">Data:</label>
+                        <input type="date" name="data" id="data_venda">
+                    </div>
+
+                    <div class="option_sale">
                         <label for="valor_total">Valor Total:</label>
                         <input type="text" placeholder="Valor Total" id="valor_total">
                     </div>
@@ -97,15 +102,13 @@
                         </select>
                     </div>
 
-                    <div class="add_sale_btn">
-                        <a href="#" class="button">Adicionar</a>
-                    </div>
                 </div>
 
+                <div class="add_sale_btn">
+                    <a href="#" class="button">Adicionar</a>
+                </div>
 
             </div>
-
-
         </section>
 
         <section id="numbs">
