@@ -42,7 +42,7 @@
             </div>
 
             <div class="infos_btn">
-                <a href="#" class="button">Imprimir Números</a>
+                <a href="#" class="button" onclick="printPage()" id="print_btn">Imprimir Números</a>
             </div>
         </section>
 
@@ -59,10 +59,10 @@
                     <div class="card">
                         <div class="card_content">
                             <div class="card_title">
-                                <h2>Total de Pedidos Ativos</h2>
+                                <h2>Total de Pedidos</h2>
                             </div>
                             <div class="card_cont">
-                                <h3>0</h3>
+                                <h3 class="quantidade_pedidos">0</h3>
                             </div>
                         </div>
                     </div>
@@ -115,6 +115,8 @@
             <p>Rústicos & Cia Dashboard - Developed by <a href="#">Matheus Dums</a> - All Right Reserved</p>
         </div>
     </footer>
+    
+    <script src="../js/script.js"></script>
 </body>
 
 </html>

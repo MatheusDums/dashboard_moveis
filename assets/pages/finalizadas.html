@@ -42,7 +42,69 @@
             </div>
 
             <div class="infos_btn">
-                <a href="#" class="button">Adicionar Venda</a>
+                <a href="#" class="button" onclick="showForm()" id="infosBtnText">Adicionar Venda</a>
+            </div>
+        </section>
+        <section id="add_sale" class="add_sale_disable">
+            <div class="add_sale_content">
+                <h2>Adicionar Venda</h2>
+            </div>
+
+            <div class="add_sale_inputs">
+                <div class="inputs_top">
+                    <div class="option_sale">
+                        <label for="pedido_num">Numero do Pedido:</label>
+                        <input type="text" placeholder="Numero do pedido" id="pedido_num" required>
+                    </div>
+
+                    <div class="option_sale">
+                        <label for="quantidade">Quantidade:</label>
+                        <input type="text" placeholder="Quantidade" id="quantidade" required>
+                    </div>
+
+                    <div class="option_sale">
+                        <label for="item">Item:</label>
+                        <input type="text" placeholder="Item" id="item" required>
+                    </div>
+
+                    <div class="option_sale">
+                        <label for="cliente">Cliente:</label>
+                        <input type="text" placeholder="Cliente" id="cliente" required>
+                    </div>
+                </div>
+
+                <div class="inputs_bottom">
+                    <div class="option_sale">
+                        <label for="data_venda">Data:</label>
+                        <input type="date" name="data" id="data_venda" required>
+                    </div>
+
+                    <div class="option_sale">
+                        <label for="valor_total">Valor Total:</label>
+                        <input type="text" placeholder="Valor Total" id="valor_total" required>
+                    </div>
+
+                    <div class="option_sale">
+                        <label for="lucro">Lucro:</label>
+                        <input type="text" placeholder="Lucro" id="lucro" required>
+                    </div>
+
+                    <div class="option_sale">
+                        <label for="situacao">Situação Atual:</label>
+                        <select name="options" id="situacao">
+                            <option value="confirmado">Pedido Confirmado</option>
+                            <option value="preparando">Em Preparação</option>
+                            <option value="entrega">Aguardando Entrega</option>
+                            <option value="finalizada">Entregue</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="add_sale_btn">
+                    <a href="#" class="button">Adicionar</a>
+                </div>
+
             </div>
         </section>
 
@@ -51,10 +113,10 @@
                 <div class="card">
                     <div class="card_content">
                         <div class="card_title">
-                            <h2>Total de Pedidos Ativos</h2>
+                            <h2>Total de Pedidos</h2>
                         </div>
                         <div class="card_cont">
-                            <h3>0</h3>
+                            <h3 class="quantidade_pedidos">0</h3>
                         </div>
                     </div>
                 </div>
@@ -65,7 +127,7 @@
                             <h2>Valor Total de Vendas</h2>
                         </div>
                         <div class="card_cont">
-                            <h3>R$ <span>0</span></h3>
+                            <h3>R$ <span class="valor_total_ok">0</span></h3>
                         </div>
                     </div>
 
@@ -77,7 +139,7 @@
                             <h2>Lucro Total</h2>
                         </div>
                         <div class="card_cont">
-                            <h3>R$ <span>0</span></h3>
+                            <h3>R$ <span class="valor_lucro_ok" >0</span></h3>
                         </div>
                     </div>
 
@@ -126,13 +188,13 @@
 
                     <tbody class="table_body">
                         <tr>
-                            <td>#000</td>
+                            <td># <span class="quantidade_pedidos_span">000</span></td>
                             <td>0</td>
                             <td>Teste</td>
                             <td>Matheus</td>
                             <td>18/05/2025</td>
-                            <td>R$ <span>0</span></td>
-                            <td>R$ <span>0</span></td>
+                            <td class="valor_total_td">R$ <span class="valor_total_span">1000</span></td>
+                            <td>R$ <span class="valor_lucro_span">500</span></td>
                             <td>
                                 <select name="" id="">
                                     <option value="confirmado">Pedido Confirmado</option>
@@ -146,13 +208,13 @@
 
 
                         <tr>
-                            <td>#001</td>
+                            <td># <span  class="quantidade_pedidos_span">001</span></td>
                             <td>0</td>
                             <td>Cristaleira 2pt Azul</td>
                             <td>Dums</td>
                             <td>18/05/2025</td>
-                            <td>R$ <span>0</span></td>
-                            <td>R$ <span>0</span></td>
+                            <td class="valor_total_td">R$ <span class="valor_total_span">30</span></td>
+                            <td>R$ <span class="valor_lucro_span">15</span></td>
                             <td>
                                 <select name="" id="">
                                     <option value="confirmado">Pedido Confirmado</option>
@@ -175,6 +237,8 @@
             <p>Rústicos & Cia Dashboard - Developed by <a href="#">Matheus Dums</a> - All Right Reserved</p>
         </div>
     </footer>
+
+    <script src="../js/script.js"></script>
 </body>
 
 </html>

@@ -150,7 +150,7 @@ nav {
 
 /* infos - cards */
 #numbs {
-    padding-top: 5rem;
+    padding-top: 2rem;
 }
 
 .info_cards {
@@ -277,6 +277,15 @@ footer {
 
 /* ----------------------------------------------------------------------------------------------------------------------- */
 /* page apos acionar botão adicionar venda */
+.add_sale_disable {
+    display: none;
+}
+
+.add_sale_enable {
+    display: flex;
+    flex-direction: column;
+}
+
 #add_sale {
     padding: 2rem 0;
     background-color: var(--gray_border);
@@ -348,7 +357,7 @@ footer {
 /* Finalizadas Page */
 
 .pagina_finalizadas #numbs {
-    padding-top: 0rem;
+    padding-top: 2rem;
 }
 
 /* ----------------------------------------------------------------------------------------------------------------------- */
@@ -367,18 +376,18 @@ footer {
 
 .pagina_ultimo_mes .cards_top {
     display: flex;
-    flex-direction: row;  
+    flex-direction: row;
     justify-content: space-evenly;
-    padding: 2rem 0;  
+    padding: 2rem 0;
 }
 
 .pagina_ultimo_mes .cards_bottom {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly; 
+    justify-content: space-evenly;
 }
 
-.pagina_ultimo_mes .card{
+.pagina_ultimo_mes .card {
     padding: 0 1rem;
 }
 
