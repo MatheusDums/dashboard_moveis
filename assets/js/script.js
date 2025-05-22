@@ -1,7 +1,14 @@
-/* SALVAR NO LOCAL STORAGE  */
-function salvarNoLocalStorage()  {
-  
+/* SALVAR OPÇÃO DO SELECT NO LOCAL STORAGE  */
+const select = document.getElementById("meuSelect");
+const valorSalvo = localStorage.getItem('opcaoSelecionada');
+if (valorSalvo) {
+  select.value = valorSalvo;
 }
+
+select.addEventListener('change', function () {
+  localStorage.setItem('opcaoSelecionada', select.value);
+})
+
 
 /* FUNÇÃO PARA EXIBIR OU NÃO O FORMULÁRIO DE ADCIONAR VENDA */
 const infosbBtn = document.querySelectorAll(".info_btn");
@@ -9,14 +16,14 @@ let infosBtnText = document.getElementById("infosBtnText");
 let addSales = document.getElementById("add_sale");
 
 function showForm() {
-  if (addSales.classList.contains("add_sale_enable")) {
-    addSales.classList.remove("add_sale_enable");
-    addSales.classList.add("add_sale_disable");
-    infosBtnText.innerHTML = "Adicionar Venda";
-  } else {
+  if (addSales.classList.contains("add_sale_disable")) {
     addSales.classList.remove("add_sale_disable");
     addSales.classList.add("add_sale_enable");
     infosBtnText.innerHTML = "Fechar";
+  } else {
+    addSales.classList.remove("add_sale_enable");
+    addSales.classList.add("add_sale_disable");
+    infosBtnText.innerHTML = "Adicionar Venda";
   }
 }
 
@@ -29,7 +36,6 @@ function printPage() {
 }
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 /* VALOR CORRETO EM VALOR TOTAL DE VENDAS */
-let valorTotalVenda = 0;
 
 function calcularValorTotal() {
   let valorTotal = 0;
@@ -49,7 +55,6 @@ let valorTotalCerto = document.getElementsByClassName("valor_total_ok");
 valorTotalCerto[0].innerHTML = calcularValorTotal().toFixed(0);
 
 /* VALOR CORRETO EM LUCRO */
-let lucroTotal = document.querySelectorAll("valor_lucro_span");
 
 function calcularLucroTotal() {
   let lucroTotal = 0;
@@ -70,9 +75,6 @@ let valorLucroCerto = document.getElementsByClassName("valor_lucro_ok");
 valorLucroCerto[0].innerHTML = calcularLucroTotal();
 
 /* TOTAL DE PEDIDOS CORRETO */
-/* quantidade_pedidos / quantidade_pedidos_span*/
-
-let quantidadePedidos = document.querySelectorAll("td");
 
 function calcularQuantidadeTotal() {
   let quantidadeTotal = 0;
@@ -87,7 +89,8 @@ function calcularQuantidadeTotal() {
 }
 
 console.log(calcularQuantidadeTotal());
-let quantidadePedidosCerto = document.getElementsByClassName("quantidade_pedidos");
+let quantidadePedidosCerto =
+  document.getElementsByClassName("quantidade_pedidos");
 quantidadePedidosCerto[0].innerHTML = calcularQuantidadeTotal();
 
 /* TOTAL DE PEDIDOS EM PRODUÇÃO */

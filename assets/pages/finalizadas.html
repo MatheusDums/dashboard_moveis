@@ -36,6 +36,7 @@
     </header>
 
     <main>
+        <!-- SECTION DE INFOS (BOTÃO DE ADD VENDA) -->
         <section id="infos">
             <div class="infos_hello">
                 <h1>Olá Matheus 👋🏼,</h1>
@@ -45,16 +46,17 @@
                 <a href="#" class="button" onclick="showForm()" id="infosBtnText">Adicionar Venda</a>
             </div>
         </section>
+
+        <!-- SECTION DE ADD VENDA (ABRE E FECHA) -->
         <section id="add_sale" class="add_sale_disable">
             <div class="add_sale_content">
                 <h2>Adicionar Venda</h2>
-            </div>
-
+            </div>          
             <div class="add_sale_inputs">
                 <div class="inputs_top">
                     <div class="option_sale">
                         <label for="pedido_num">Numero do Pedido:</label>
-                        <input type="text" placeholder="Numero do pedido" id="pedido_num" required>
+                        <input type="text" placeholder="Numero do pedido" id="pedido_num" required disabled value="#">
                     </div>
 
                     <div class="option_sale">
@@ -107,7 +109,7 @@
 
             </div>
         </section>
-
+        <!-- SECTION DE INFOS (CARDS) -->
         <section id="numbs">
             <section class="info_cards">
                 <div class="card">
@@ -158,14 +160,14 @@
                 </div>
             </section>
         </section>
-
+        <!-- SECTION DA TABELA -->
         <section id="info_table">
             <div class="infos_table">
                 <h2>Últimos Pedidos</h2>
             </div>
 
             <div class="infos_table_btn">
-                <a href="#" class="table_btn">Todos</a>
+                <a href="../../index.html" class="table_btn">Todos</a>
                 <a href="#" class="table_btn">Finalizadas</a>
             </div>
         </section>
@@ -187,21 +189,22 @@
                     </thead>
 
                     <tbody class="table_body">
-                        <tr>
-                            <td># <span class="quantidade_pedidos_span">000</span></td>
-                            <td>0</td>
+                        <tbody class="table_body">
+                        <tr class="table_body_tr">
+                            <td># <span  class="quantidade_pedidos_span" >000</span></td>
+                            <td>3</td>
                             <td>Teste</td>
                             <td>Matheus</td>
                             <td>18/05/2025</td>
                             <td class="valor_total_td">R$ <span class="valor_total_span">1000</span></td>
                             <td>R$ <span class="valor_lucro_span">500</span></td>
                             <td>
-                                <select name="" id="">
+                                <select name="" id="meuSelect">
                                     <option value="confirmado">Pedido Confirmado</option>
                                     <option value="preparando">Em Preparação</option>
                                     <option value="entrega">Aguardando Entrega</option>
                                     <option value="finalizada">Entregue</option>
-                                    <option value="deletar">Deletar</option>
+                                    <option value="deletar" class="delete_option">Deletar</option>
                                 </select>
                             </td>
                         </tr>
@@ -209,19 +212,19 @@
 
                         <tr>
                             <td># <span  class="quantidade_pedidos_span">001</span></td>
-                            <td>0</td>
+                            <td>5</td>
                             <td>Cristaleira 2pt Azul</td>
                             <td>Dums</td>
                             <td>18/05/2025</td>
                             <td class="valor_total_td">R$ <span class="valor_total_span">30</span></td>
                             <td>R$ <span class="valor_lucro_span">15</span></td>
                             <td>
-                                <select name="" id="">
+                                <select name="" id="meuSelect">
                                     <option value="confirmado">Pedido Confirmado</option>
                                     <option value="preparando">Em Preparação</option>
                                     <option value="entrega">Aguardando Entrega</option>
                                     <option value="finalizada">Entregue</option>
-                                    <option value="deletar">Deletar</option>
+                                    <option value="deletar" class="delete_option">Deletar</option>
                                 </select>
                             </td>
                         </tr>
@@ -231,7 +234,7 @@
             </div>
         </div>
     </main>
-
+    <!-- FOOTER -->
     <footer>
         <div class="footer_content">
             <p>Rústicos & Cia Dashboard - Developed by <a href="#">Matheus Dums</a> - All Right Reserved</p>

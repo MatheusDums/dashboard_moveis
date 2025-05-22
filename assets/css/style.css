@@ -249,6 +249,10 @@ table {
     text-align: center;
 }
 
+.delete_option {
+    background-color: var(--red);
+}
+
 .table_container {
     overflow: hidden;
     padding-bottom: 5rem;
