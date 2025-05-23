@@ -37,23 +37,23 @@
         </nav>
     </header>
 
-    <main> 
+    <main>
         <!-- SECTION DE INFOS (BOTÃO DE ADD VENDA) -->
         <section id="infos">
             <div class="infos_hello">
                 <h1>Olá Matheus 👋🏼,</h1>
             </div>
-            
-             <div class="infos_btn">
+
+            <div class="infos_btn">
                 <a href="#" class="button" onclick="showForm()" id="infosBtnText">Adicionar Venda</a>
             </div>
         </section>
-    <!-- SECTION DE ADD VENDA (ABRE E FECHA) -->
+        <!-- SECTION DE ADD VENDA (ABRE E FECHA) -->
         <section id="add_sale" class="add_sale_disable">
             <div class="add_sale_content">
                 <h2>Adicionar Venda</h2>
             </div>
-            
+
             <div class="add_sale_inputs">
                 <div class="inputs_top">
                     <div class="option_sale">
@@ -91,7 +91,7 @@
                     <div class="option_sale">
                         <label for="lucro">Lucro:</label>
                         <input type="text" placeholder="Lucro" id="lucro" required>
-                    </div>  
+                    </div>
 
                     <div class="option_sale">
                         <label for="situacao">Situação Atual:</label>
@@ -155,7 +155,7 @@
                             <h2>Pedidos em Preparação</h2>
                         </div>
                         <div class="card_cont">
-                            <h3>0</h3>
+                            <h3 class="pedidos_prep_span">0</h3>
                         </div>
                     </div>
 
@@ -192,7 +192,7 @@
 
                     <tbody class="table_body">
                         <tr class="table_body_tr">
-                            <td># <span class="quantidade_pedidos_span" >000</span></td>
+                            <td># <span class="quantidade_pedidos_span"></span></td>
                             <td class="quantidade_itens_span">3</td>
                             <td class="item_span">Teste</td>
                             <td class="cliente_span">Matheus</td>
@@ -212,14 +212,14 @@
 
 
                         <tr class="table_body_tr">
-                            <td># <span class="quantidade_pedidos_span">001</span></td>
+                            <td># <span class="quantidade_pedidos_span"></span></td>
                             <td>5</td>
                             <td>Cristaleira 2pt Azul</td>
                             <td>Dums</td>
                             <td>18/05/2025</td>
                             <td class="valor_total_td">R$ <span class="valor_total_span">30</span></td>
                             <td>R$ <span class="valor_lucro_span">15</span></td>
-                            <td>
+                            <td class="select_span">
                                 <select name="" id="meuSelect">
                                     <option value="confirmado">Pedido Confirmado</option>
                                     <option value="preparando">Em Preparação</option>
@@ -232,6 +232,9 @@
 
                     </tbody>
                 </table>
+            </div>
+            <div class="reload_btn">
+                <a href="#" class="button" onclick="reloadPage()" id="infosBtnText">Atualizar</a>
             </div>
         </div>
     </main>

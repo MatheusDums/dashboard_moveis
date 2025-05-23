@@ -255,7 +255,14 @@ table {
 
 .table_container {
     overflow: hidden;
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
+}
+
+.reload_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
 }
 
 /* footer */
