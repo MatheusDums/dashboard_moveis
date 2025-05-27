@@ -1,7 +1,138 @@
-/* FUNÇÃO PARA SALVAR AS OPÇÕES SELECIONADAS NO LOCALSTORAGE (aqui usei IA pois estava com problema, salvava apenas 1 select,
-e não todos, ai busquei ajuda.) */
+// contador para simular número do pedido (caso esteja desabilitado no form)
+let pedidoCounter = 1;
+
+function addSaleLine() {
+  const quantidadeItens = document.getElementById("quantidade").value;
+  const item = document.getElementById("item").value;
+  const cliente = document.getElementById("cliente").value;
+  const data = document.getElementById("data_venda").value;
+  const valorTotal = document.getElementById("valor_total").value;
+  const valorLucro = document.getElementById("valor_lucro").value;
+  const situacao = document.getElementById("situacao").value;
+
+  const pedidoNum = pedidoCounter++;
+
+  const venda = {
+    pedidoNum,
+    quantidadeItens,
+    item,
+    cliente,
+    data,
+    valorTotal,
+    valorLucro,
+    situacao,
+  };
+
+  // salva no localStorage
+  let vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
+  vendasSalvas.push(venda);
+  localStorage.setItem("vendas", JSON.stringify(vendasSalvas));
+
+  // adiciona visualmente na tabela
+  adicionarVendaNaTabela(venda);
+
+  // limpa o formulário
+  document.getElementById("quantidade").value = "";
+  document.getElementById("item").value = "";
+  document.getElementById("cliente").value = "";
+  document.getElementById("data_venda").value = "";
+  document.getElementById("valor_total").value = "";
+  document.getElementById("valor_lucro").value = "";
+  document.getElementById("situacao").value = "confirmado";
+
+  // atualiza os valores dos cards após adicionar nova venda
+  // atualiza os valores dos cards na tela
+  atualizarCards()
+  configurarSelects(); // recarrega os selects e a contagem de produção
+}
+
+function adicionarVendaNaTabela(venda) {
+  const tableSection = document.querySelector(".table_body");
+  const newLine = document.createElement("tr");
+  newLine.classList.add("table_body_tr");
+
+  newLine.innerHTML = `
+    <td># <span class="quantidade_pedidos_span">${venda.pedidoNum}</span></td>
+    <td class="quantidade_itens_span">${venda.quantidadeItens}</td>
+    <td class="item_span">${venda.item}</td>
+    <td class="cliente_span">${venda.cliente}</td>
+    <td class="data_span">${venda.data}</td>
+    <td class="valor_total_td">R$ <span class="valor_total_span">${
+      venda.valorTotal
+    }</span></td>
+    <td>R$ <span class="valor_lucro_span">${venda.valorLucro}</span></td>
+    <td class="select_span">
+      <select class="meuSelect">
+        <option value="confirmado" ${
+          venda.situacao === "confirmado" ? "selected" : ""
+        }>Pedido Confirmado</option>
+        <option value="preparando" ${
+          venda.situacao === "preparando" ? "selected" : ""
+        }>Em Preparação</option>
+        <option value="entrega" ${
+          venda.situacao === "entrega" ? "selected" : ""
+        }>Aguardando Entrega</option>
+        <option value="finalizada" ${
+          venda.situacao === "finalizada" ? "selected" : ""
+        }>Entregue</option>
+        <option value="deletar">Deletar</option>
+      </select>
+    </td>
+  `;
+
+  tableSection.appendChild(newLine);
+}
+
+window.onload = () => {
+  const vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
+
+  vendasSalvas.forEach((venda) => {
+    if (venda.pedidoNum >= pedidoCounter) {
+      pedidoCounter = venda.pedidoNum + 1;
+    }
+    adicionarVendaNaTabela(venda);
+  });
+
+  configurarSelects();
+  atualizarCards();
+};
+
+
+document.addEventListener("change", function (e) {
+  if (e.target.tagName === "SELECT") {
+    const select = e.target;
+    const selectedValue = select.value;
+
+    if (selectedValue === "deletar") {
+      const row = select.closest("tr");
+      const pedidoNumText = row
+        .querySelector(".quantidade_pedidos_span")
+        .textContent.trim();
+
+      // Remove a linha da tabela
+      row.remove();
+
+      // Remove do localStorage
+      let vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
+      vendasSalvas = vendasSalvas.filter((v) => v.pedidoNum != pedidoNumText);
+      localStorage.setItem("vendas", JSON.stringify(vendasSalvas));
+
+      // atualiza os valores dos cards após remover uma venda
+      valorTotalCerto[0].innerHTML = calcularValorTotal().toFixed(0);
+      valorLucroCerto[0].innerHTML = calcularLucroTotal();
+      quantidadePedidosCerto[0].innerHTML = calcularQuantidadeTotal();
+      configurarSelects();
+    }
+  }
+});
+
+/* --------------------------------------------------------------------------------------------------------------------------------- */
+
+/* FUNÇÃO PARA SALVAR AS OPÇÕES SELECIONADAS NO LOCALSTORAGE */
 function configurarSelects() {
-  const selects = document.querySelectorAll("#meuSelect");
+  const selects = document.querySelectorAll(".meuSelect");
+
+  let quantidadeEmProducao = 0;
 
   selects.forEach((select) => {
     const tr = select.closest("tr");
@@ -11,27 +142,60 @@ function configurarSelects() {
     const chave = `statusPedido_${idPedido}`;
 
     const valorSalvo = localStorage.getItem(chave);
-    if (valorSalvo) {
+    if (valorSalvo && valorSalvo !== "deletar") {
       select.value = valorSalvo;
     }
 
-    select.addEventListener("change", () => {
-      localStorage.setItem(chave, select.value);
-    });
-
-    /* FUNÇÃO PARA DEFINIR QUANTOS PEDIDOS ESTÃO EM PRODUÇÃO */
-    let chaveValue = select.value;
-    console.log(chaveValue);
-    let quantidadeEmProducao = 0;
-    for (let i = 0; i < selects.length; i++) {
-      if ( selects[i].value === "confirmado" || selects[i].value === "preparando" || selects[i].value === "entrega") {
-        quantidadeEmProducao++;
-      }
+    // Atualiza contagem de produção
+    if (
+      select.value === "confirmado" ||
+      select.value === "preparando" ||
+      select.value === "entrega"
+    ) {
+      quantidadeEmProducao++;
     }
-    let quantidadeEmProducaoSpan = document.querySelectorAll(".pedidos_prep_span");
-    quantidadeEmProducaoSpan.forEach((span) => {
-      span.innerText = quantidadeEmProducao;
-    });
+
+    // Evita adicionar múltiplos listeners
+    if (!select.dataset.listenerAdicionado) {
+      select.addEventListener("change", () => {
+        if (select.value === "deletar") {
+          const row = select.closest("tr");
+          const pedidoNumText = row
+            .querySelector(".quantidade_pedidos_span")
+            .textContent.trim();
+
+          // Remove visualmente
+          row.remove();
+
+          // Remove do localStorage
+          let vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
+          vendasSalvas = vendasSalvas.filter(
+            (v) => v.pedidoNum != pedidoNumText
+          );
+          localStorage.setItem("vendas", JSON.stringify(vendasSalvas));
+
+          // Remove status salvo
+          localStorage.removeItem(`statusPedido_${pedidoNumText}`);
+
+          // Atualiza cards
+          atualizarCards();
+
+          configurarSelects(); // recontar produção e limpar selects
+        } else {
+          localStorage.setItem(chave, select.value);
+        }
+      });
+
+      // Marcar que já foi adicionado para não duplicar
+      select.dataset.listenerAdicionado = "true";
+    }
+  });
+
+  // Atualiza número de pedidos em produção
+  let quantidadeEmProducaoSpan =
+    document.querySelectorAll(".pedidos_prep_span");
+  quantidadeEmProducaoSpan.forEach((span) => {
+    span.innerText = quantidadeEmProducao;
   });
 }
 
@@ -39,12 +203,11 @@ window.addEventListener("DOMContentLoaded", configurarSelects);
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 /* FUNÇÃO PARA RECARREGAR A PAGINA COM O ONCLICK PARA ATUALIZAR OS CARDS */
-
-function reloadPage(){
-  window.location.reload()
+function reloadPage() {
+  window.location.reload();
 }
-/* --------------------------------------------------------------------------------------------------------------------------------- */
 
+/* --------------------------------------------------------------------------------------------------------------------------------- */
 /* DEIXA O No DO PEDIDO AUTOMÁTICO */
 const linhas = document.querySelectorAll("tr.table_body_tr");
 
@@ -55,6 +218,11 @@ linhas.forEach((linha, index) => {
     spanId.textContent = idPedido;
   }
 });
+
+let numPedidoInput = document.getElementById("pedido_num");
+if (numPedidoInput) {
+  numPedidoInput.value = String(linhas.length + 1).padStart(3, "0");
+}
 
 /* FUNÇÃO PARA EXIBIR OU NÃO O FORMULÁRIO DE ADCIONAR VENDA */
 const infosbBtn = document.querySelectorAll(".info_btn");
@@ -74,7 +242,6 @@ function showForm() {
 }
 
 /* FUNÇÃO PARA IMPRIMIR PÁGINA DOS ULTIMOS 30 DIAS */
-
 const printBtn = document.getElementById("print_btn");
 
 function printPage() {
@@ -83,7 +250,6 @@ function printPage() {
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 /* VALOR CORRETO EM VALOR TOTAL DE VENDAS */
-
 function calcularValorTotal() {
   let valorTotal = 0;
   let valorTotalSpan = document.querySelectorAll(".valor_total_span");
@@ -95,8 +261,6 @@ function calcularValorTotal() {
   });
   return valorTotal;
 }
-
-console.log(calcularValorTotal());
 
 let valorTotalCerto = document.getElementsByClassName("valor_total_ok");
 valorTotalCerto[0].innerHTML = calcularValorTotal().toFixed(0);
@@ -118,29 +282,25 @@ function calcularLucroTotal() {
   return lucroTotal;
 }
 
-console.log(calcularLucroTotal());
 let valorLucroCerto = document.getElementsByClassName("valor_lucro_ok");
 valorLucroCerto[0].innerHTML = calcularLucroTotal();
-
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 /* TOTAL DE PEDIDOS CORRETO */
-
 function calcularQuantidadeTotal() {
-  let quantidadeTotal = 0;
-  let qtdPedidosSpan = document.querySelectorAll(".quantidade_pedidos_span");
-  qtdPedidosSpan.forEach((span) => {
-    let quantidade = parseInt(span.innerText);
-    if (!isNaN(quantidade)) {
-      quantidadeTotal++;
-    }
-  });
-  return quantidadeTotal;
+  let quantidadePedidosSpan = document.querySelectorAll(
+    ".quantidade_pedidos_span"
+  );
+  return quantidadePedidosSpan.length;
 }
 
-console.log(calcularQuantidadeTotal());
 let quantidadePedidosCerto =
   document.getElementsByClassName("quantidade_pedidos");
 quantidadePedidosCerto[0].innerHTML = calcularQuantidadeTotal();
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
-
+/* Atualizar os valores do card */
+function atualizarCards() {
+  valorTotalCerto[0].innerHTML = calcularValorTotal().toFixed(0);
+  valorLucroCerto[0].innerHTML = calcularLucroTotal();
+  quantidadePedidosCerto[0].innerHTML = calcularQuantidadeTotal();
+}
