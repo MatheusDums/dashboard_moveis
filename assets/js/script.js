@@ -10,7 +10,7 @@ function addSaleLine() {
   const valorLucro = document.getElementById("valor_lucro").value;
   const situacao = document.getElementById("situacao").value;
 
-  const pedidoNum = pedidoCounter++;
+  const pedidoNum = String(pedidoCounter++).padStart(3, "0");
 
   const venda = {
     pedidoNum,
@@ -42,7 +42,7 @@ function addSaleLine() {
 
   // atualiza os valores dos cards após adicionar nova venda
   // atualiza os valores dos cards na tela
-  atualizarCards()
+  atualizarCards();
   configurarSelects(); // recarrega os selects e a contagem de produção
 }
 
@@ -56,7 +56,7 @@ function adicionarVendaNaTabela(venda) {
     <td class="quantidade_itens_span">${venda.quantidadeItens}</td>
     <td class="item_span">${venda.item}</td>
     <td class="cliente_span">${venda.cliente}</td>
-    <td class="data_span">${venda.data}</td>
+    <td class="data_span">${dayjs(venda.data).format("DD/MM/YYYY")}</td>
     <td class="valor_total_td">R$ <span class="valor_total_span">${
       venda.valorTotal
     }</span></td>
@@ -86,45 +86,48 @@ function adicionarVendaNaTabela(venda) {
 window.onload = () => {
   const vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
 
-  vendasSalvas.forEach((venda) => {
-    if (venda.pedidoNum >= pedidoCounter) {
-      pedidoCounter = venda.pedidoNum + 1;
+  // Seleciona todas as linhas existentes no HTML que já possuem vendas
+  const linhasFixas = document.querySelectorAll("tr.table_body_tr");
+
+  let contador = 1;
+
+  // Atualiza os números dos pedidos nas linhas HTML fixas
+  linhasFixas.forEach((linha) => {
+    const spanId = linha.querySelector(".quantidade_pedidos_span");
+    if (spanId) {
+      const idPedido = String(contador).padStart(3, "0");
+      spanId.textContent = idPedido;
+      contador++;
     }
+  });
+
+  // Reajusta pedidoCounter para as próximas vendas via formulário
+  pedidoCounter = contador;
+
+  // Adiciona vendas do localStorage
+  vendasSalvas.forEach((venda) => {
+    // Atualiza o número para continuar a sequência
+    venda.pedidoNum = String(pedidoCounter).padStart(3, "0");
     adicionarVendaNaTabela(venda);
+    pedidoCounter++;
+    let contadorVendasInput = document.getElementById("pedido_num");
+    contadorVendasInput.value = String(pedidoCounter).padStart(3, "0");
   });
 
   configurarSelects();
   atualizarCards();
-};
 
+  // Fallback: valores salvos dos cards
+  const valorSalvo = localStorage.getItem("valorTotal");
+  const lucroSalvo = localStorage.getItem("lucroTotal");
+  const qtdSalva = localStorage.getItem("quantidadePedidos");
 
-document.addEventListener("change", function (e) {
-  if (e.target.tagName === "SELECT") {
-    const select = e.target;
-    const selectedValue = select.value;
-
-    if (selectedValue === "deletar") {
-      const row = select.closest("tr");
-      const pedidoNumText = row
-        .querySelector(".quantidade_pedidos_span")
-        .textContent.trim();
-
-      // Remove a linha da tabela
-      row.remove();
-
-      // Remove do localStorage
-      let vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
-      vendasSalvas = vendasSalvas.filter((v) => v.pedidoNum != pedidoNumText);
-      localStorage.setItem("vendas", JSON.stringify(vendasSalvas));
-
-      // atualiza os valores dos cards após remover uma venda
-      valorTotalCerto[0].innerHTML = calcularValorTotal().toFixed(0);
-      valorLucroCerto[0].innerHTML = calcularLucroTotal();
-      quantidadePedidosCerto[0].innerHTML = calcularQuantidadeTotal();
-      configurarSelects();
-    }
+  if (valorSalvo && lucroSalvo && qtdSalva) {
+    valorTotalCerto[0].innerHTML = valorSalvo;
+    valorLucroCerto[0].innerHTML = lucroSalvo;
+    quantidadePedidosCerto[0].innerHTML = qtdSalva;
   }
-});
+};
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -159,6 +162,14 @@ function configurarSelects() {
     if (!select.dataset.listenerAdicionado) {
       select.addEventListener("change", () => {
         if (select.value === "deletar") {
+          const confirmar = confirm(
+            "Tem certeza que deseja deletar este pedido?"
+          );
+          if (!confirmar) {
+            select.value = localStorage.getItem(chave) || "confirmado";
+            return;
+          }
+
           const row = select.closest("tr");
           const pedidoNumText = row
             .querySelector(".quantidade_pedidos_span")
@@ -199,6 +210,7 @@ function configurarSelects() {
   });
 }
 
+
 window.addEventListener("DOMContentLoaded", configurarSelects);
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
@@ -208,22 +220,6 @@ function reloadPage() {
 }
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
-/* DEIXA O No DO PEDIDO AUTOMÁTICO */
-const linhas = document.querySelectorAll("tr.table_body_tr");
-
-linhas.forEach((linha, index) => {
-  const spanId = linha.querySelector(".quantidade_pedidos_span");
-  if (spanId) {
-    const idPedido = String(index + 1).padStart(3, "0");
-    spanId.textContent = idPedido;
-  }
-});
-
-let numPedidoInput = document.getElementById("pedido_num");
-if (numPedidoInput) {
-  numPedidoInput.value = String(linhas.length + 1).padStart(3, "0");
-}
-
 /* FUNÇÃO PARA EXIBIR OU NÃO O FORMULÁRIO DE ADCIONAR VENDA */
 const infosbBtn = document.querySelectorAll(".info_btn");
 let infosBtnText = document.getElementById("infosBtnText");
@@ -241,15 +237,10 @@ function showForm() {
   }
 }
 
-/* FUNÇÃO PARA IMPRIMIR PÁGINA DOS ULTIMOS 30 DIAS */
-const printBtn = document.getElementById("print_btn");
-
-function printPage() {
-  window.print();
-}
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 /* VALOR CORRETO EM VALOR TOTAL DE VENDAS */
+/* pegar valor do localstorage */
 function calcularValorTotal() {
   let valorTotal = 0;
   let valorTotalSpan = document.querySelectorAll(".valor_total_span");
@@ -299,8 +290,63 @@ quantidadePedidosCerto[0].innerHTML = calcularQuantidadeTotal();
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 /* Atualizar os valores do card */
+
 function atualizarCards() {
-  valorTotalCerto[0].innerHTML = calcularValorTotal().toFixed(0);
-  valorLucroCerto[0].innerHTML = calcularLucroTotal();
-  quantidadePedidosCerto[0].innerHTML = calcularQuantidadeTotal();
+  const total = calcularValorTotal().toFixed(0);
+  const lucro = calcularLucroTotal();
+  const quantidade = calcularQuantidadeTotal();
+
+  valorTotalCerto[0].innerHTML = total;
+  valorLucroCerto[0].innerHTML = lucro;
+  quantidadePedidosCerto[0].innerHTML = quantidade;
+
+  localStorage.setItem("valorTotal", total);
+  localStorage.setItem("lucroTotal", lucro);
+  localStorage.setItem("quantidadePedidos", quantidade);
+}
+
+/* --------------------------------------------------------------------------------------------------------------------------------- */
+/* MOSTRA QUE O BOTÃO ESTÁ SELECIOANDO */
+const botoesFiltro = document.querySelectorAll(".table_btn");
+
+botoesFiltro.forEach((botao) => {
+  botao.addEventListener("click", () => {
+    // Remove 'ativo' de todos os botões
+    botoesFiltro.forEach((btn) => btn.classList.remove("ativo"));
+
+    // Adiciona 'ativo' apenas ao clicado
+    botao.classList.add("ativo");
+  });
+});
+
+/* --------------------------------------------------------------------------------------------------------------------------------- */
+/* FILTRO DE LINHAS (ATIVOS/TODOS/FINALIZADAS) */
+
+document.getElementById("btnTodos").addEventListener("click", () => {
+  filtrarLinhas("todos");
+});
+
+document.getElementById("btnAtivos").addEventListener("click", () => {
+  filtrarLinhas("ativos");
+});
+
+document.getElementById("btnFinalizadas").addEventListener("click", () => {
+  filtrarLinhas("finalizadas");
+});
+
+function filtrarLinhas(filtro) {
+  const linhas = document.querySelectorAll("tr.table_body_tr");
+
+  linhas.forEach((linha) => {
+    const select = linha.querySelector(".meuSelect");
+    const status = select.value;
+
+    if (filtro === "todos") {
+      linha.style.display = ""; // mostra tudo
+    } else if (filtro === "finalizadas") {
+      linha.style.display = status === "finalizada" ? "" : "none";
+    } else if (filtro === "ativos") {
+      linha.style.display = status !== "finalizada" ? "" : "none";
+    }
+  });
 }

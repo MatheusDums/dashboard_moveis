@@ -17,6 +17,10 @@ main {
     padding: 0 50px;
 }
 
+button {
+    cursor: pointer;
+}
+
 .button {
     text-decoration: none;
     color: var(--white);
@@ -38,6 +42,11 @@ main {
 }
 
 .table_btn:hover {
+    background-color: var(--sand_dark);
+    color: var(--white);
+}
+
+.table_btn.ativo {
     background-color: var(--sand_dark);
     color: var(--white);
 }
@@ -263,6 +272,10 @@ table {
     justify-content: center;
     align-items: center;
     padding-top: 3rem;
+}
+
+.select_entrega {
+    display: none;
 }
 
 /* footer */

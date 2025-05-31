@@ -29,7 +29,6 @@
             <div class="header_menu">
                 <ul>
                     <li><a href="../../index.html">Dashboard</a></li>
-                    <li><a href="../pages/finalizadas.html">Finalizadas</a></li>
                     <li><a href="#">30 dias</a></li>
                 </ul>
         </nav>
@@ -48,7 +47,7 @@
 
         <section id="info_table">
             <div class="infos_table">
-                <h2>Últimos 30 Dias - <span>00/00/0000</span></h2>
+                <h2>Últimos 30 Dias - <span class="span_date">00/00/0000</span></h2>
             </div>
         </section>
 
@@ -62,7 +61,7 @@
                                 <h2>Total de Pedidos</h2>
                             </div>
                             <div class="card_cont">
-                                <h3>0</h3>
+                                <h3 class="quantidade_pedidos">0</h3>
                             </div>
                         </div>
                     </div>
@@ -73,7 +72,7 @@
                                 <h2>Valor Total de Vendas</h2>
                             </div>
                             <div class="card_cont">
-                                <h3>R$ <span>0</span></h3>
+                                <h3>R$ <span class="valor_total_ok">0</span></h3>
                             </div>
                         </div>
 
@@ -87,7 +86,7 @@
                                 <h2>Lucro Total</h2>
                             </div>
                             <div class="card_cont">
-                                <h3>R$ <span>0</span></h3>
+                                <h3>R$ <span class="valor_lucro_ok">0</span></h3>
                             </div>
                         </div>
 
@@ -99,7 +98,7 @@
                                 <h2>Pedidos em Preparação</h2>
                             </div>
                             <div class="card_cont">
-                                <h3>0</h3>
+                                <h3 class="pedidos_prep_span">0</h3>
                             </div>
                         </div>
 
@@ -115,8 +114,10 @@
             <p>Rústicos & Cia Dashboard - Developed by <a href="#">Matheus Dums</a> - All Right Reserved</p>
         </div>
     </footer>
-    
-    <!-- <script src="../js/script.js"></script> -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>   
+    <script src="../js/script_last_days.js"></script>
 </body>
 
 </html>
