@@ -365,4 +365,4 @@ function sincronizarPaginas() {
     url: window.location.href,
   });
   window.dispatchEvent(evento);
-}
+};
