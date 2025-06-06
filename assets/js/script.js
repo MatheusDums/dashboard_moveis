@@ -27,6 +27,7 @@ function addSaleLine() {
   let vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
   vendasSalvas.push(venda);
   localStorage.setItem("vendas", JSON.stringify(vendasSalvas));
+  console.log(vendasSalvas);
 
   // adiciona visualmente na tabela
   adicionarVendaNaTabela(venda);
@@ -156,6 +157,8 @@ function configurarSelects() {
       select.value === "entrega"
     ) {
       quantidadeEmProducao++;
+    } else {
+      quantidadeEmProducao;
     }
 
     // Evita adicionar múltiplos listeners
@@ -168,6 +171,9 @@ function configurarSelects() {
           if (!confirmar) {
             select.value = localStorage.getItem(chave) || "confirmado";
             return;
+          } else {
+            localStorage.setItem(chave, select.value);
+            sincronizarPaginas(); // <- Adicione esta linha
           }
 
           const row = select.closest("tr");
@@ -210,7 +216,6 @@ function configurarSelects() {
   });
 }
 
-
 window.addEventListener("DOMContentLoaded", configurarSelects);
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
@@ -236,7 +241,6 @@ function showForm() {
     infosBtnText.innerHTML = "Adicionar Venda";
   }
 }
-
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 /* VALOR CORRETO EM VALOR TOTAL DE VENDAS */
@@ -295,6 +299,7 @@ function atualizarCards() {
   const total = calcularValorTotal().toFixed(0);
   const lucro = calcularLucroTotal();
   const quantidade = calcularQuantidadeTotal();
+  const quantidadeEmPrep = configurarSelects();
 
   valorTotalCerto[0].innerHTML = total;
   valorLucroCerto[0].innerHTML = lucro;
@@ -303,6 +308,7 @@ function atualizarCards() {
   localStorage.setItem("valorTotal", total);
   localStorage.setItem("lucroTotal", lucro);
   localStorage.setItem("quantidadePedidos", quantidade);
+  localStorage.setItem("emProducao", quantidadeEmPrep);
 }
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
@@ -349,4 +355,14 @@ function filtrarLinhas(filtro) {
       linha.style.display = status !== "finalizada" ? "" : "none";
     }
   });
+}
+
+// Adicione esta função no arquivo principal (IA ajudou)
+function sincronizarPaginas() {
+  const evento = new StorageEvent("storage", {
+    key: "sync_pedidos",
+    newValue: Date.now().toString(),
+    url: window.location.href,
+  });
+  window.dispatchEvent(evento);
 }

@@ -1,41 +1,72 @@
-let span_date = document.getElementsByClassName("span_date");
+// Função específica para atualizar pedidos em produção
+function atualizarCardsUltimos30Dias() {
+  const hoje = dayjs();
+  const limite = hoje.subtract(30, "days");
+  const vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
+  
+  // Filtra vendas dos últimos 30 dias
+  const vendasUltimos30Dias = vendasSalvas.filter(venda => {
+    return dayjs(venda.data).isAfter(limite);
+  });
 
-let today = dayjs();
-let last30days = dayjs().startOf("month").add(-30, "day").format("DD/MM/YYYY");
+  let total = 0;
+  let lucro = 0;
+  let pedidosEmProducao = 0;
+  
+  vendasUltimos30Dias.forEach(venda => {
+    total += parseFloat(venda.valorTotal || 0);
+    lucro += parseFloat(venda.valorLucro || 0);
+    
+    // Verifica status atual (prioriza o salvo no localStorage)
+    const statusSalvo = localStorage.getItem(`statusPedido_${venda.pedidoNum}`);
+    const statusAtual = statusSalvo || venda.situacao;
+    
+    if (statusAtual === "confirmado" || 
+        statusAtual === "preparando" || 
+        statusAtual === "entrega") {
+      pedidosEmProducao++;
+    }
+  });
 
-console.log(`há um mês atrás: ${last30days}`);
-
-let span_date_ok = span_date;
-span_date_ok[0].innerHTML = last30days;
-
-/* FUNÇÃO PARA IMPRIMIR PÁGINA DOS ULTIMOS 30 DIAS */
-const printBtn = document.getElementById("print_btn");
-
-function printPage() {
-  window.print();
+  // Atualiza todos os cards
+  document.querySelectorAll(".valor_total_ok").forEach(span => {
+    span.innerHTML = total.toFixed(0);
+  });
+  document.querySelectorAll(".valor_lucro_ok").forEach(span => {
+    span.innerHTML = lucro.toFixed(0);
+  });
+  document.querySelectorAll(".quantidade_pedidos").forEach(span => {
+    span.innerHTML = vendasUltimos30Dias.length;
+  });
+  document.querySelectorAll(".pedidos_prep_span").forEach(span => {
+    span.innerHTML = pedidosEmProducao;
+  });
 }
 
-/* FUNÇÕES PARA OS CARDS */
-
 window.onload = () => {
-  const total = localStorage.getItem("valorTotal") || 0;
-  const lucro = localStorage.getItem("lucroTotal") || 0;
-  const quantidade = localStorage.getItem("quantidadePedidos") || 0;
-  const emProducao = localStorage.getItem("pedidosEmProducao") || 0;
-
-  document.querySelectorAll(".valor_total_ok").forEach((span) => {
-    span.innerHTML = `${total}`;
+  atualizarCardsUltimos30Dias();
+  
+  // Listener para mudanças no localStorage (IA)
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'vendas' || 
+        (e.key && e.key.startsWith('statusPedido_')) ||
+        e.key === 'sync_pedidos' ||
+        e.key === 'force_update') {
+      setTimeout(() => {
+        atualizarCardsUltimos30Dias();
+      }, 100);
+    }
   });
+  
 
-  document.querySelectorAll(".valor_lucro_ok").forEach(span => {
-    span.innerHTML = `${lucro}`;
-  });
+  let span_date = document.getElementsByClassName("span_date");
+  let last30days = dayjs().add(-30, "day").format("DD/MM/YYYY");
+  if (span_date.length > 0) {
+    span_date[0].innerHTML = last30days;
+  }
+};
 
-  document.querySelectorAll(".quantidade_pedidos").forEach(span => {
-    span.innerHTML = quantidade;
-  });
-
-  document.querySelectorAll(".pedidos_prep_span").forEach(span => {
-    span.innerHTML = emProducao;
-  });
+// Função para imprimir a página
+function printPage() {
+  window.print();
 }
