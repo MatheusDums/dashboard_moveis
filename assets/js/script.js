@@ -302,7 +302,23 @@ function atualizarCards() {
   const quantidadeEmPrep = configurarSelects();
 
   valorTotalCerto[0].innerHTML = total;
+  if (total.length > 5) {
+    let diminuirH3 = document.querySelector(".h3_diminuir");
+    diminuirH3.style.fontSize = "40px";
+    valorTotalCerto[0].style.fontSize = "40px";
+  } else {
+    valorTotalCerto[0].style.fontSize = "";
+  }
+
   valorLucroCerto[0].innerHTML = lucro;
+  if (lucro.toString().length > 5) {
+    let diminuirH3 = document.querySelector(".h3Menor");
+    diminuirH3.style.fontSize = "40px";
+    valorLucroCerto[0].style.fontSize = "40px";
+  } else {
+    valorLucroCerto[0].style.fontSize = "";
+  }
+
   quantidadePedidosCerto[0].innerHTML = quantidade;
 
   localStorage.setItem("valorTotal", total);
@@ -365,4 +381,4 @@ function sincronizarPaginas() {
     url: window.location.href,
   });
   window.dispatchEvent(evento);
-};
+}
